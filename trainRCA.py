@@ -22,7 +22,7 @@ class Solver_RCA:
         training_ratio=0.8,  #  training data percentage
         max_epochs=100,  #  training epochs
         coteaching=1.0,  #  whether selects sample based on loss value
-        oe=0.0,  # how much we overestimate the ground-truth anomaly ratio
+        oe=0.0,  # how much we overestimate the ground-truth anomaly ratio'
         missing_ratio=0.0,  # missing ratio in the data
     ):
         # Data loader
@@ -155,10 +155,12 @@ class Solver_RCA:
                 loss.backward()
                 optimizer.step()
 
-            if self.beta < self.data_anomaly_ratio:
-                self.beta = min(
-                    self.data_anomaly_ratio, self.beta + self.decay_ratio
-                )
+            self.beta = max(1-self.data_anomaly_ratio,
+                            self.beta - self.data_anomaly_ratio / (self.alpha * self.max_epochs))
+            # if self.beta < self.data_anomaly_ratio:
+            #     self.beta = min(
+            #         self.data_anomaly_ratio, self.beta + self.decay_ratio
+            #     )
 
     def test(self):
         print("======================TEST MODE======================")
