@@ -83,8 +83,10 @@ class AE(nn.Module):
         _, d = x1.shape
         z1 = self.encoder1(x1)
         xhat1 = self.decoder1(z1)
-        z2 = self.encoder1(x2)
-        xhat2 = self.decoder1(z2)
+        z2 = self.encoder2(x2)
+        xhat2 = self.decoder2(z2)
+        # z2 = self.encoder1(x2)
+        # xhat2 = self.decoder1(z2)
         return z1, z2, xhat1, xhat2
 
 
